@@ -5,6 +5,7 @@ RSpec.describe OrderPayment, type: :model do
     user = FactoryBot.create(:user)
     item = FactoryBot.create(:item)
     @order_payment = FactoryBot.build(:order_payment, user_id: user.id, item_id: item.id)
+    sleep 0.1
   end
 
   describe '商品購入情報の保存' do
@@ -34,10 +35,10 @@ RSpec.describe OrderPayment, type: :model do
         @order_payment.valid?
         expect(@order_payment.errors.full_messages).to include("City can't be blank")
       end
-      it '区市町村以下(address)が空だと保存できない' do
-        @order_payment.address = ''
+      it '区市町村以下(address_line)が空だと保存できない' do
+        @order_payment.address_line = ''
         @order_payment.valid?
-        expect(@order_payment.errors.full_messages).to include("Address can't be blank")
+        expect(@order_payment.errors.full_messages).to include("Address line can't be blank")
       end
       it '電話番号(phone_number)が空だと保存できない' do
         @order_payment.phone_number = ''
@@ -89,10 +90,10 @@ RSpec.describe OrderPayment, type: :model do
         @order_payment.valid?
         expect(@order_payment.errors.full_messages).to include("Phone number is invalid")
       end
-      it '購入者(order_id)が空だと保存できない' do
-        @order_payment.order_id = ''
+      it '購入者(user_id)が空だと保存できない' do
+        @order_payment.user_id = ''
         @order_payment.valid?
-        expect(@order_payment.errors.full_messages).to include("Order can't be blank")
+        expect(@order_payment.errors.full_messages).to include("User can't be blank")
       end
       it '購入商品(item_id)が空だと保存できない' do
         @order_payment.item_id = ''
